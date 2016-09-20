@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 
 import { Events, ionicBootstrap, MenuController, Nav, Platform } from 'ionic-angular';
 import { Splashscreen, StatusBar } from 'ionic-native';
+import * as firebase from 'firebase';
 
 import { AccountPage } from './pages/account/account';
 import { ConferenceData } from './providers/conference-data';
@@ -43,9 +44,10 @@ class ConferenceApp {
     { title: 'Login', component: LoginPage, icon: 'log-in' },
     { title: 'Signup', component: SignupPage, icon: 'person-add' }
   ];
-  rootPage: any = TutorialPage;
+  rootPage: any = LoginPage;
 
   constructor(
+
     public events: Events,
     public userData: UserData,
     public menu: MenuController,
@@ -57,6 +59,18 @@ class ConferenceApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
+
+    
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDYSt-U9dsoJY2tiH-OYZEUO5HUk474wSs",
+      authDomain: "ionic-app-45c43.firebaseapp.com",
+      databaseURL: "https://ionic-app-45c43.firebaseio.com",
+      storageBucket: "ionic-app-45c43.appspot.com",
+      messagingSenderId: "703671050249"
+    };
+    firebase.initializeApp(config);
+    
 
     // load the conference data
     confData.load();

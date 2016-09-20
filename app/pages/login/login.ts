@@ -5,6 +5,7 @@ import { NavController } from 'ionic-angular';
 import { SignupPage } from '../signup/signup';
 import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
+import * as firebase from 'firebase';
 
 
 @Component({
@@ -21,11 +22,26 @@ export class LoginPage {
 
     if (form.valid) {
       this.userData.login(this.login.username);
-      this.navCtrl.push(TabsPage);
+      firebase.auth().signInWithEmailAndPassword(this.login.username, this.login.password)
+        .then((_auth) => {
+          this.navCtrl.push(TabsPage);
+        })
+        .catch((error: firebase.auth.Error) => {
+          console.log(error);
+        })
+      // this.navCtrl.push(TabsPage);
     }
   }
 
   onSignup() {
     this.navCtrl.push(SignupPage);
+  }
+
+  onLoginWithGoogle() {
+    
+  }
+
+  onLoginWithFacebook() {
+
   }
 }
